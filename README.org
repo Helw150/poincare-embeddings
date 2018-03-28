@@ -18,6 +18,8 @@ To embed the mammals subtree in the reconstruction setting (i.e., without missin
 #+END_SRC
 This shell script includes the appropriate parameter settings for the mammals subtree and saves the trained model as =mammals.pth=. 
 
+An identical script to learn embeddings of the entire noun hierarchy is located at =train-nouns.sh=. This script contains the hyperparameter setting to reproduce the results for 10-dimensional embeddings of [[https://papers.nips.cc/paper/7213-poincare-embeddings-for-learning-hierarchical-representations][(Nickel & Kiela, 2017)]]. The hyperparameter setting to reproduce the MAP results are provided as comments in the script.
+
 The embeddings are trained via multithreaded async SGD. In the example above, the number of threads is set to a conservative setting (=NHTREADS=2=) which should run well even on smaller machines. On machines with many cores, increase =NTHREADS= for faster convergence.
 
 ** Installation

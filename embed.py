@@ -17,6 +17,7 @@ from data import slurp
 from rsgd import RiemannianSGD
 from sklearn.metrics import average_precision_score
 import gc
+import sys
 
 
 def ranking(types, model, distfn):
@@ -112,13 +113,13 @@ if __name__ == '__main__':
     parser.add_argument('-debug', help='Print debug output', action='store_true', default=False)
     opt = parser.parse_args()
 
-    th.set_default_tensor_type('torch.DoubleTensor')
+    th.set_default_tensor_type('torch.FloatTensor')
     if opt.debug:
         log_level = logging.DEBUG
     else:
         log_level = logging.INFO
     log = logging.getLogger('poincare-nips17')
-    logging.basicConfig(level=log_level, format='%(message)s')
+    logging.basicConfig(level=log_level, format='%(message)s', stream=sys.stdout)
     idx, objects = slurp(opt.dset)
 
     # create adjacency list for evaluation
@@ -133,7 +134,7 @@ if __name__ == '__main__':
     if opt.distfn == 'poincare':
         distfn = model.PoincareDistance
         opt.rgrad = rsgd.poincare_grad
-    elif opt.distf == 'euclidean':
+    elif opt.distfn == 'euclidean':
         distfn = model.EuclideanDistance
         opt.rgrad = rsgd.euclidean_grad
     elif opt.distfn == 'transe':
